@@ -29,15 +29,14 @@ async function updateProduct(id: string, formData: FormData) {
 export default async function EditProduct({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>;
 }) {
-  // Explicitly await params.id resolution
-  const { id } = await Promise.resolve(params)
+  const { id } = await params;
 
-  const product = await getProduct(id)
+  const product = await getProduct(id);
 
   if (!product) {
-    return <div>Product not found</div>
+    return <div>Product not found</div>;
   }
 
   return (
@@ -77,5 +76,5 @@ export default async function EditProduct({
         <Button type="submit">Update Product</Button>
       </form>
     </div>
-  )
+  );
 }

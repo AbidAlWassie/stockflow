@@ -7,14 +7,10 @@ import { db } from "@/db"
 import { products } from "@/db/schema"
 import { revalidatePath } from "next/cache"
 import { v4 as uuidv4 } from "uuid"
-import ProductList from "../components/ProductList"
 
-async function getProducts() {
-  return await db.select().from(products).orderBy(products.productId)
-}
+
 
 export default async function Home() {
-  const productList = await getProducts()
 
   async function addProduct(formData: FormData) {
     "use server"
@@ -59,7 +55,6 @@ export default async function Home() {
             <CardTitle>Product List</CardTitle>
           </CardHeader>
           <CardContent>
-            <ProductList products={productList} />
           </CardContent>
         </Card>
       </div>

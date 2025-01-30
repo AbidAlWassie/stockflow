@@ -1,16 +1,17 @@
+// components/sidebar/app-sidebar.tsx
 "use client"
 
 import {
+  ArrowsUpFromLine,
   AudioWaveform,
-  BookOpen,
-  Bot,
+  Banknote,
   Command,
   Frame,
   GalleryVerticalEnd,
   Map,
+  Package,
   PieChart,
   Settings2,
-  SquareTerminal,
 } from "lucide-react"
 import * as React from "react"
 
@@ -31,7 +32,7 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "",
   },
   teams: [
     {
@@ -52,65 +53,53 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Products",
       url: "#",
-      icon: SquareTerminal,
+      icon: Package,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Products List",
+          url: "/products",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Add Product",
+          url: "/products/add",
         },
         {
-          title: "Settings",
+          title: "Export",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Sales",
       url: "#",
-      icon: Bot,
+      icon: ArrowsUpFromLine,
       items: [
         {
-          title: "Genesis",
+          title: "Orders List",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Add Order",
           url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
+        }
       ],
     },
     {
-      title: "Documentation",
+      title: "Expenses",
       url: "#",
-      icon: BookOpen,
+      icon: Banknote,
       items: [
         {
-          title: "Introduction",
+          title: "Expenses List",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Add Expense",
           url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
+        }
       ],
     },
     {
