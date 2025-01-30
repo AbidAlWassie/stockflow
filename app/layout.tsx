@@ -1,3 +1,6 @@
+// app/layout.tsx
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -24,10 +27,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* <head>
+      <script
+          crossOrigin="anonymous"
+          src="//unpkg.com/react-scan/dist/auto.global.js"
+        />
+      </head> */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SidebarProvider defaultOpen={true}>
+          <AppSidebar />
+          <main className="flex-1 overflow-auto">{children}</main>
+        </SidebarProvider>
       </body>
     </html>
   );

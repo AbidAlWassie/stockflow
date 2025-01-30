@@ -1,3 +1,4 @@
+// app/products/edit/[id]/page.tsx
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -25,8 +26,15 @@ async function updateProduct(id: string, formData: FormData) {
   }
 }
 
-export default async function EditProduct({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id)
+export default async function EditProduct({
+  params,
+}: {
+  params: { id: string }
+}) {
+  // Explicitly await params.id resolution
+  const { id } = await Promise.resolve(params)
+
+  const product = await getProduct(id)
 
   if (!product) {
     return <div>Product not found</div>
@@ -35,22 +43,39 @@ export default async function EditProduct({ params }: { params: { id: string } }
   return (
     <div className="max-w-md mx-auto">
       <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
-      <form action={updateProduct.bind(null, params.id)} className="space-y-4">
+      <form action={updateProduct.bind(null, id)} className="space-y-4">
         <div>
           <Label htmlFor="name">Product Name</Label>
-          <Input id="name" name="name" defaultValue={product.name} required />
+          <Input
+            id="name"
+            name="name"
+            defaultValue={product.name}
+            required
+          />
         </div>
         <div>
           <Label htmlFor="price">Price</Label>
-          <Input id="price" name="price" type="number" step="0.01" defaultValue={product.price} required />
+          <Input
+            id="price"
+            name="price"
+            type="number"
+            step="0.01"
+            defaultValue={product.price}
+            required
+          />
         </div>
         <div>
           <Label htmlFor="stockQuantity">Stock Quantity</Label>
-          <Input id="stockQuantity" name="stockQuantity" type="number" defaultValue={product.stockQuantity} required />
+          <Input
+            id="stockQuantity"
+            name="stockQuantity"
+            type="number"
+            defaultValue={product.stockQuantity}
+            required
+          />
         </div>
         <Button type="submit">Update Product</Button>
       </form>
     </div>
   )
 }
-

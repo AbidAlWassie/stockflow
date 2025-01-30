@@ -1,12 +1,13 @@
+// app/page.tsx
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { db } from "@/db"
 import { products } from "@/db/schema"
 import { revalidatePath } from "next/cache"
 import { v4 as uuidv4 } from "uuid"
+import ProductList from "../components/ProductList"
 
 async function getProducts() {
   return await db.select().from(products).orderBy(products.productId)
@@ -22,7 +23,7 @@ export default async function Home() {
 
     if (name && !isNaN(price)) {
       await db.insert(products).values({
-        productId: uuidv4(), // Generate a unique ID
+        productId: uuidv4(),
         name,
         price,
         stockQuantity: 0,
@@ -58,26 +59,10 @@ export default async function Home() {
             <CardTitle>Product List</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Price</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {productList.map((product) => (
-                  <TableRow key={product.productId}>
-                    <TableCell>{product.name}</TableCell>
-                    <TableCell>${product.price.toFixed(2)}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <ProductList products={productList} />
           </CardContent>
         </Card>
       </div>
     </div>
   )
 }
-
