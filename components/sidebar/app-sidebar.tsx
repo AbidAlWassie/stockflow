@@ -30,8 +30,8 @@ import { TeamSwitcher } from "./team-switcher"
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "demo",
+    email: "demo@example.com",
     avatar: "",
   },
   teams: [
