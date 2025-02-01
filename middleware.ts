@@ -3,10 +3,13 @@ import { NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
-  const host = request.headers.get('host') || ''; // Get host from headers
+  const host = request.headers.get('host') || ''; // Get the host from headers
+  const baseDomain = process.env.BASE_DOMAIN || 'stockflow-beta.netlify.app'; // Use environment variable for base domain
+
+  // Check if the request is from localhost
   const isLocalhost = host.includes('localhost');
 
-  // Extract subdomain correctly
+  // Extract the subdomain
   let subdomain = '';
   if (isLocalhost) {
     const parts = host.split(':'); // Handle localhost:3000
@@ -18,7 +21,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  console.log('host:', host, 'subdomain:', subdomain, 'pathname:', url.pathname);
+  console.log('Host:', host, 'Subdomain:', subdomain, 'Pathname:', url.pathname);
 
   // ✅ Allow access to auth-related paths and static files
   if (
@@ -35,16 +38,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // ✅ Handle root domain (localhost:3000 or example.com)
-  if ((isLocalhost && host === 'localhost:3000') || (!isLocalhost && !host.includes('.'))) {
+  // ✅ Handle requests to the root domain
+  if ((isLocalhost && host === 'localhost:3000') || (!isLocalhost && host === baseDomain)) {
     const demoUrl = new URL(url);
-    demoUrl.host = isLocalhost ? 'demo.localhost:3000' : `demo.${host}`;
+    demoUrl.host = isLocalhost ? 'demo.localhost:3000' : `demo.${baseDomain}`;
     return NextResponse.redirect(demoUrl);
   }
 
   // ✅ Redirect other subdomains to the signin page
   const signInUrl = new URL('/api/auth/signin', url);
-  signInUrl.host = isLocalhost ? 'localhost:3000' : host.split('.').slice(-2).join('.');
+  signInUrl.host = isLocalhost ? 'localhost:3000' : baseDomain;
   return NextResponse.redirect(signInUrl);
 }
 
