@@ -148,9 +148,9 @@ function SignInComponent() {
             </div>
           </div>
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-indigo-900/50">
-              <TabsTrigger value="signin" className="data-[state=active]:bg-indigo-800">Sign In</TabsTrigger>
-              <TabsTrigger value="signup" className="data-[state=active]:bg-indigo-800">Sign Up</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 bg-indigo-900/50 text-slate-300">
+              <TabsTrigger value="signin" className="data-[state=active]:bg-indigo-800 text-slate-300">Sign In</TabsTrigger>
+              <TabsTrigger value="signup" className="data-[state=active]:bg-indigo-800 text-slate-300">Sign Up</TabsTrigger>
             </TabsList>
             
             <TabsContent value="signin" className="space-y-4">

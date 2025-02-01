@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -13,10 +16,7 @@ const nextConfig = {
     ],
   },
   async headers() {
-    const origin =
-      process.env.NODE_ENV === "production"
-        ? "https://stockflow.vercel.app"
-        : "http://localhost:3000"
+    const origin = process.env.NODE_ENV === "production" ? "https://*.stockflow-beta.vercel.app" : "http://*.localhost:3000"
 
     return [
       {
@@ -35,12 +35,39 @@ const nextConfig = {
           },
           {
             key: "Access-Control-Max-Age",
-            value: "86400", // Cache preflight response for 24 hours
+            value: "86400",
           },
         ],
       },
     ]
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/:path*",
+          has: [
+            {
+              type: "host",
+              value: "demo.localhost:3000",
+            },
+          ],
+          destination: "/demo/:path*",
+        },
+        {
+          source: "/:path*",
+          has: [
+            {
+              type: "host",
+              value: "(?<subdomain>[^.]+).localhost:3000",
+            },
+          ],
+          destination: "/app/:subdomain/:path*",
+        },
+      ],
+    }
+  },
 }
 
 export default nextConfig
+
