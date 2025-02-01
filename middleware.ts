@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const host = request.headers.get('host') || ''; // Get the host from headers
-  const baseDomain = process.env.BASE_DOMAIN || 'stockflow-beta.netlify.app'; // Use environment variable for base domain
+  const baseDomain = process.env.BASE_DOMAIN || 'frostcore.tech'; // Use environment variable for base domain
 
   // Check if the request is from localhost
   const isLocalhost = host.includes('localhost');

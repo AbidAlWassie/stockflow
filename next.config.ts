@@ -16,7 +16,7 @@ const nextConfig = {
     ],
   },
   async headers() {
-    const origin = process.env.NODE_ENV === "production" ? "https://*.stockflow-beta.vercel.app" : "http://*.localhost:3000"
+    const origin = process.env.NODE_ENV === "production" ? "https://*.frostcore.tech" : "http://*.localhost:3000"
 
     return [
       {
